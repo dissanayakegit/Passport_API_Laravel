@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\CEO;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\CEOResource;
+use App\Models\CEO as ModelsCEO;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -17,7 +18,7 @@ class CEOController extends Controller
      */
     public function index()
     {
-        $ceos = CEO::all();
+        $ceos = ModelsCEO::all();
         return response([ 'ceos' => CEOResource::collection($ceos), 'message' => 'Retrieved successfully'], 200);
     }
 
@@ -42,7 +43,7 @@ class CEOController extends Controller
             return response(['error' => $validator->errors(), 'Validation Error']);
         }
 
-        $ceo = CEO::create($data);
+        $ceo = ModelsCEO::create($data);
 
         return response([ 'ceo' => new CEOResource($ceo), 'message' => 'Created successfully'], 200);
     }
@@ -53,7 +54,7 @@ class CEOController extends Controller
      * @param  \App\CEO  $ceo
      * @return \Illuminate\Http\Response
      */
-    public function show(CEO $ceo)
+    public function show(ModelsCEO $ceo)
     {
         return response([ 'ceo' => new CEOResource($ceo), 'message' => 'Retrieved successfully'], 200);
 
@@ -66,7 +67,7 @@ class CEOController extends Controller
      * @param  \App\CEO  $ceo
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, CEO $ceo)
+    public function update(Request $request, ModelsCEO $ceo)
     {
 
         $ceo->update($request->all());
@@ -81,7 +82,7 @@ class CEOController extends Controller
      * @return \Illuminate\Http\Response
      * @throws \Exception
      */
-    public function destroy(CEO $ceo)
+    public function destroy(ModelsCEO $ceo)
     {
         $ceo->delete();
 
