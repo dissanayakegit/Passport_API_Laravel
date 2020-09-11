@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User as ModelsUser;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
@@ -41,5 +42,9 @@ class AuthController extends Controller
 
         return response(['user' => auth()->user(), 'access_token' => $accessToken]);
 
+    }
+
+    public function me(){
+        return Auth::user();
     }
 }
