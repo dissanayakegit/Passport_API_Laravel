@@ -10,9 +10,10 @@ import 'bootstrap';
 import App from './App.vue'
 
 
-const app = new Vue({
+new Vue({
     el: '#app',
 
     router,
 
-    components:{ App}});
+    components: { App }
+});
