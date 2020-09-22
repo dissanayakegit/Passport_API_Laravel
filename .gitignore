@@ -4,6 +4,8 @@
 /public/storage
 /storage/*.key
 /vendor
+.idea/
+resources/sass/
 .env
 .env.backup
 .phpunit.result.cache

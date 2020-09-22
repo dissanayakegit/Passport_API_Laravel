@@ -46,16 +46,13 @@ export default {
 
       }),
         submit(){
-            let credintials = {
+            let credentials = {
                 email : this.email,
                 password : this.password
             }
-
-            this.logIn(credintials).then(() => {
-
+            this.logIn(credentials).then(() => {
+                this.$router.push({path: "/dashBoard"});
             });
-
-            
         }
     }
 };

@@ -1,6 +1,9 @@
 import vue from 'vue';
 require('./bootstrap');
 
+require('./subscriber');
+
+
 window.Vue = require('vue');
 
 import 'bootstrap/dist/css/bootstrap.css';
@@ -11,9 +14,11 @@ import store from './store'
 import router from './routes'
 
 
-new Vue({
-    el: '#app',
-    router,
-    store,
-    components: { App }
+store.dispatch('attempt', localStorage.getItem('token')).then(() => {
+    new Vue({
+        el: '#app',
+        router,
+        store,
+        components: { App }
+    });
 });

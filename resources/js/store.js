@@ -25,32 +25,40 @@ export default new Vuex.Store({
         register({dispatch, commit}, save_data){
             axios.post('api/register', save_data);
         },
-        async logIn({dispatch, commit}, credintials){
-            let response = await axios.post('/api/login', credintials);
-            this.dispatch('attempt',response.data.access_token);            
+        async logIn({dispatch, commit}, credentials){
+            let response = await axios.post('/api/login', credentials);
+            this.dispatch('attempt',response.data.access_token);
         },
-        async attempt({dispatch, commit}, access_token){
-            this.commit('SET_TOKEN', access_token);
-            console.log('access_token:', access_token);
-
+        async attempt({dispatch, commit}, token){
+            commit('SET_TOKEN', token);
             try{
-                let response = await axios.post('api/user', {
-                    headers: {
-                        'Authorization': 'Bearer' + access_token
+                if(token){
+                    let response = await axios.post('api/user');
+                    if (Object.keys(response.data).length === 0) {
+                        commit('SET_TOKEN', null)
                     }
-                });
-                console.log('user:', response.data);
-
+                    commit('SET_USER', response.data);
+                }
             }catch(e){
-                console.log(e);
-
+                commit('SET_TOKEN', null);
+                commit('SET_USER', null);
             }
+        },
+
+        signOut({commit}) {
+            return axios.get('api/logout').then(() => {
+                commit('SET_TOKEN', null)
+                commit('SET_USER', null)
+            });
         }
     },
 
     mutations: {
         SET_TOKEN(state, access_token ){
             state.token = access_token;
+        },
+        SET_USER(state, user ){
+            state.user = user;
         }
 
     }
