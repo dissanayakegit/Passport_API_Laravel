@@ -15,6 +15,11 @@ export default new VueRouter({
             component: DashBoard
         },
         {
+            name: 'DashBoard',
+            path: '/dashboard',
+            component: DashBoard
+        },
+        {
             name: 'login',
             path: '/login',
             component: Login

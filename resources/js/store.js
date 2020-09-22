@@ -6,7 +6,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
     state: {
         token: null,
-        user:null
+        user: null
     },
 
     getters: {
@@ -16,30 +16,33 @@ export default new Vuex.Store({
         user(state) {
             return state.user
         },
-        getToken(state){
+        getToken(state) {
             return state.token
         }
     },
 
     actions: {
-        register({dispatch, commit}, save_data){
+        register({dispatch, commit}, save_data) {
             axios.post('api/register', save_data);
         },
-        async logIn({dispatch, commit}, credentials){
+        async logIn({dispatch, commit}, credentials) {
             let response = await axios.post('/api/login', credentials);
-            this.dispatch('attempt',response.data.access_token);
+            this.dispatch('attempt', response.data.access_token);
         },
-        async attempt({dispatch, commit}, token){
-            commit('SET_TOKEN', token);
-            try{
-                if(token){
-                    let response = await axios.post('api/user');
-                    if (Object.keys(response.data).length === 0) {
-                        commit('SET_TOKEN', null)
-                    }
-                    commit('SET_USER', response.data);
+        async attempt({commit, state}, token) {
+            if (token) {
+                commit('SET_TOKEN', token);
+            }
+            if (!state.token) {
+                return
+            }
+            try {
+                let response = await axios.post('api/user');
+                if (Object.keys(response.data).length === 0) {
+                    commit('SET_TOKEN', null)
                 }
-            }catch(e){
+                commit('SET_USER', response.data);
+            } catch (e) {
                 commit('SET_TOKEN', null);
                 commit('SET_USER', null);
             }
@@ -54,10 +57,10 @@ export default new Vuex.Store({
     },
 
     mutations: {
-        SET_TOKEN(state, access_token ){
+        SET_TOKEN(state, access_token) {
             state.token = access_token;
         },
-        SET_USER(state, user ){
+        SET_USER(state, user) {
             state.user = user;
         }
 

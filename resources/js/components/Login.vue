@@ -51,7 +51,7 @@ export default {
                 password : this.password
             }
             this.logIn(credentials).then(() => {
-                this.$router.push({path: "/dashBoard"});
+                this.$router.push({path: "/dashboard"});
             });
         }
     }
