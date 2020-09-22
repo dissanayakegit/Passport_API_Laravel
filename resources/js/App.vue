@@ -1,16 +1,24 @@
 <template>
     <div class="app">
-        <h1>app dot vue</h1>
+        <Nav />
         <router-view></router-view>
     </div>
 </template>
 
 <script>
-    export default {
+import Nav from './components/Nav'
 
-    }
+export default {
+    name: "App",
+    data() {
+        return {}
+    },
+    components: {
+        Nav
+    },
+}
 </script>
 
-<style  scoped>
+<style scoped>
 
 </style>
