@@ -4,7 +4,11 @@
 
 <script>
 export default {
-    name: "DashBoard"
+    name: "DashBoard",
+
+    mounted() {
+        this.isAuthenticatedUser();
+    }
 }
 </script>
 

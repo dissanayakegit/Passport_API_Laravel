@@ -6,6 +6,9 @@ require('./subscriber');
 
 window.Vue = require('vue');
 
+import isAuthenticatedUser from "./isAuthenticatedUser";
+Vue.mixin(isAuthenticatedUser);
+
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap';
 
