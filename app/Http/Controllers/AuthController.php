@@ -44,7 +44,8 @@ class AuthController extends Controller
 
     }
 
-    public function user(){
+    public function user(Request $request){
+        //dd(1, $request);
         return Auth::user();
     }
 }

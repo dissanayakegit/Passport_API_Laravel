@@ -27,13 +27,18 @@ export default new Vuex.Store({
         },
         async logIn({dispatch, commit}, credintials){
             let response = await axios.post('/api/login', credintials);
-            this.dispatch('attempt',response);            
+            this.dispatch('attempt',response.data.access_token);            
         },
-        async attempt({dispatch, commit}, response){
-            this.commit('SET_TOKEN', response.data.access_token);
+        async attempt({dispatch, commit}, access_token){
+            this.commit('SET_TOKEN', access_token);
+            console.log('access_token:', access_token);
 
             try{
-                let response = await axios.get('api/user');
+                let response = await axios.post('api/user', {
+                    headers: {
+                        'Authorization': 'Bearer' + access_token
+                    }
+                });
                 console.log('user:', response.data);
 
             }catch(e){
