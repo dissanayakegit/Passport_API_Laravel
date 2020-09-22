@@ -28,6 +28,8 @@
 </template>
 
 <script>
+import {mapActions, mapState, mapMutations, mapGetters} from 'vuex'
+
 export default {
     data(){
         return{
@@ -39,14 +41,21 @@ export default {
     },
 
     methods:{
+      ...mapActions({
+        logIn : 'logIn'
+
+      }),
         submit(){
-            let save_data = {
+            let credintials = {
                 email : this.email,
                 password : this.password
             }
-            axios.post('/api/login', save_data).then(response => {
-                this.$store.dispatch('login', response.data);
+
+            this.logIn(credintials).then(() => {
+
             });
+
+            
         }
     }
 };

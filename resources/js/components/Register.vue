@@ -49,6 +49,7 @@
 </template>
 
 <script>
+import {mapActions} from 'vuex'
 export default {
     data(){
         return{
@@ -60,6 +61,9 @@ export default {
     },
 
     methods:{
+      ...mapActions({
+          register : 'register'
+      }),
         submit(){
             let save_data = {
                 name: this.name,
@@ -67,9 +71,11 @@ export default {
                 password : this.password,
                 password_confirmation: this.password_confirmation
             }
-            axios.post('api/register', save_data).then(response => {
-                console.log(response.data.access_token);
+            this.register(save_data).then(() => {
+                          this.$router.push({path: "login"});
+
             });
+            
         }
     }
 };
